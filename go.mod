@@ -9,6 +9,8 @@ require (
 	github.com/go-zepto/zepto v0.0.6
 	github.com/gorilla/css v1.0.0 // indirect
 	github.com/gorilla/mux v1.7.4
+	github.com/sendgrid/rest v2.6.1+incompatible // indirect
+	github.com/sendgrid/sendgrid-go v3.6.2+incompatible
 	github.com/tdewolff/minify/v2 v2.9.0
 	github.com/tdewolff/parse/v2 v2.5.0
 	github.com/vanng822/css v0.1.0 // indirect

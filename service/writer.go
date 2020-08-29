@@ -1,28 +1,26 @@
 package service
 
 import (
-    "io"
-    "net/http"
+	"io"
+	"net/http"
 )
 
 type MailerWriter struct {
-    io.Writer
-    value []byte
+	io.Writer
+	value []byte
 }
 
 func (mw *MailerWriter) Header() http.Header {
-    return http.Header{}
+	return http.Header{}
 }
 
 func (mw *MailerWriter) WriteHeader(int) {}
 
 func (mw *MailerWriter) Write(value []byte) (int, error) {
-    mw.value = value
-    return len(value), nil
+	mw.value = value
+	return len(value), nil
 }
 
 func (mw *MailerWriter) Value() []byte {
-    return mw.value
+	return mw.value
 }
-
-
