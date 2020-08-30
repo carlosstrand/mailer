@@ -9,7 +9,7 @@ import (
 func (h *HTTPHandler) PreviewerHandler(res http.ResponseWriter, req *http.Request) {
 	vars := mux.Vars(req)
 	data := sync.Map{}
-	output, err := h.mailer.RenderToString(vars["tmplName"], &data, true, true)
+	output, err := h.mailer.RenderToString(vars["tmplName"], &data, true, false)
 
 	if err != nil {
 		res.WriteHeader(404)
