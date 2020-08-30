@@ -30,7 +30,7 @@ func (m *Mailer) Start() {
 		zepto.Version("latest"),
 	)
 
-	mailer := service.NewMailerService(&m.config)
+	mailer := service.NewMailerService(m.config)
 	router := mux.NewRouter()
 
 	p := httphandler.NewHTTPHandler(mailer)

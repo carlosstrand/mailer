@@ -8,12 +8,12 @@ import (
 	"sync"
 )
 
-func (s *MailerService) SendFromReq(sReq types.SendMailFromTemplateRequest) error {
+func (m *MailerService) SendFromReq(sReq types.SendMailFromTemplateRequest) error {
 	data := sync.Map{}
 	for key, value := range sReq.Vars {
 		data.Store(key, value)
 	}
-	html, err := s.RenderToString(sReq.Template, &data, true, true)
+	html, err := m.RenderToString(sReq.Template, &data, true, true)
 	if err != nil {
 		return err
 	}
@@ -24,11 +24,11 @@ func (s *MailerService) SendFromReq(sReq types.SendMailFromTemplateRequest) erro
 		PlainText: "Mensagem testando",
 		HTML:      html,
 	}
-	return s.Send(message)
+	return m.Send(message)
 }
 
-func (s *MailerService) Send(message provider.Message) error {
-	for _, p := range s.config.Providers {
+func (m *MailerService) Send(message provider.Message) error {
+	for _, p := range m.config.Providers {
 		color.Cyan("Sending mail using %s provider...\n", p.Name())
 		err := p.Send(message)
 		if err == nil {

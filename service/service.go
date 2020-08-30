@@ -74,6 +74,7 @@ func (m *MailerService) RenderToString(mailTmpl string, data *sync.Map, withPrem
 	}
 
 	data.Store("styles", stylesCSS)
+	data.Store("publicPath", m.config.PublicPath)
 	err := m.renderer.Render(&wr, 200, "mails/"+mailTmpl, data)
 	if err != nil {
 		return "", err

@@ -2,6 +2,7 @@ package service
 
 import (
 	"github.com/flosch/pongo2"
+	"os"
 )
 
 type tagPublicNode struct {
@@ -9,7 +10,11 @@ type tagPublicNode struct {
 }
 
 func (self *tagPublicNode) Execute(ctx *pongo2.ExecutionContext, buffer pongo2.TemplateWriter) *pongo2.Error {
-	buffer.WriteString("/public/" + self.Name)
+	if os.Getenv("APP_ENV") == "production" {
+		buffer.WriteString("https://"+ ctx.Public["publicPath"].(string) + "/" + self.Name)
+	} else {
+		buffer.WriteString("/public/" + self.Name)
+	}
 	return nil
 }
 

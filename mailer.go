@@ -5,10 +5,10 @@ import (
 )
 
 type Mailer struct {
-	config types.MailerConfig
+	config *types.MailerConfig
 }
 
-func NewMailer(config types.MailerConfig) *Mailer {
+func NewMailer(config *types.MailerConfig) *Mailer {
 	if len(config.Providers) == 0 {
 		panic("You should add at least one mail provider")
 	}
