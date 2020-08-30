@@ -32,7 +32,7 @@ func (p *SendgridProvider) Send(msg provider.Message) error {
 	if err != nil {
 		return err
 	}
-	if res.StatusCode > 200 {
+	if res.StatusCode > 299 {
 		return errors.New(http.StatusText(res.StatusCode))
 	}
 	return nil
