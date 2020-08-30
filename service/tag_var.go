@@ -9,7 +9,11 @@ type tagVarNode struct {
 }
 
 func (self *tagVarNode) Execute(ctx *pongo2.ExecutionContext, buffer pongo2.TemplateWriter) *pongo2.Error {
-	buffer.WriteString("{{" + self.Name + "}}")
+	if ctx.Public["mode"] == "html" {
+		buffer.WriteString("{{" + self.Name + "}}")
+	} else {
+		buffer.WriteString(ctx.Public[self.Name].(string))
+	}
 	return nil
 }
 

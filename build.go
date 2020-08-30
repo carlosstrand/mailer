@@ -2,7 +2,6 @@ package mailer
 
 import (
 	"github.com/carlosstrand/mailer/service"
-	"github.com/carlosstrand/mailer/types"
 	"github.com/tdewolff/minify/v2"
 	"github.com/tdewolff/minify/v2/html"
 	"github.com/tdewolff/parse/v2/buffer"
@@ -14,12 +13,14 @@ import (
 func (m *Mailer) Build(templates []string) error {
 	minifier := minify.New()
 	minifier.AddFunc("text/html", html.Minify)
-	mailer := service.NewMailerService(&types.MailerConfig{})
+	mailer := service.NewMailerService(m.config)
 	if err := mailer.Init(); err != nil {
 		panic(err)
 	}
+	data := &sync.Map{}
+	data.Store("mode", "html")
 	for _, key := range templates {
-		html, err := mailer.RenderToString(key, &sync.Map{}, true, false)
+		html, err := mailer.RenderToString(key, data, true, false)
 		if err != nil {
 			return err
 		}

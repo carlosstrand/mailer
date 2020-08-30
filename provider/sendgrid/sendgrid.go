@@ -1,10 +1,11 @@
 package sendgrid
 
 import (
-	"fmt"
+	"errors"
 	"github.com/carlosstrand/mailer/provider"
 	"github.com/sendgrid/sendgrid-go"
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
+	"net/http"
 )
 
 type SendgridProvider struct {
@@ -28,9 +29,11 @@ func (p *SendgridProvider) Send(msg provider.Message) error {
 	to := mail.NewEmail(msg.To.Name, msg.To.Email)
 	sgMessage := mail.NewSingleEmail(from, msg.Subject, to, msg.PlainText, msg.HTML)
 	res, err := p.client.Send(sgMessage)
-	fmt.Println(res)
 	if err != nil {
 		return err
+	}
+	if res.StatusCode > 200 {
+		return errors.New(http.StatusText(res.StatusCode))
 	}
 	return nil
 }
